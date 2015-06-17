@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SessionCreateDlg" widgetVar="SessionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSessionTitle}">
+            <h:form id="SessionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sessionController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSessionLabel_plannedDate}" for="plannedDate" />
+                        <p:calendar id="plannedDate" pattern="dd/MM/yyyy HH:mm" locale="#{bundle.CalendarLocale}" value="#{sessionController.selected.plannedDate}" title="#{bundle.EditSessionTitle_plannedDate}" required="true" requiredMessage="#{bundle.EditSessionRequiredMessage_plannedDate}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSessionLabel_mailSent}" for="mailSent" />
+                        <p:inputText id="mailSent" value="#{sessionController.selected.mailSent}" title="#{bundle.CreateSessionTitle_mailSent}" required="true" requiredMessage="#{bundle.CreateSessionRequiredMessage_mailSent}"/>
+                        <p:outputLabel value="#{bundle.CreateSessionLabel_sessionType}" for="sessionType" />
+                        <p:selectOneMenu id="sessionType" value="#{sessionController.selected.sessionType}" required="true" requiredMessage="#{bundle.EditSessionRequiredMessage_sessionType}">
+                            <f:selectItems value="#{sessionTypeController.itemsAvailableSelectOne}"
+                                           var="sessionTypeItem"
+                                           itemValue="#{sessionTypeItem}" itemLabel="#{sessionTypeItem.label}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSessionLabel_bookedBy}" for="bookedBy" />
+                        <p:selectOneMenu id="bookedBy" value="#{sessionController.selected.bookedBy}" required="true" requiredMessage="#{bundle.EditSessionRequiredMessage_bookedBy}">
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="bookedByItem"
+                                           itemValue="#{bookedByItem}" itemLabel="#{bookedByItem.login}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSessionLabel_club}" for="club" />
+                        <p:selectOneMenu id="club" value="#{sessionController.selected.club}" >
+                            <f:selectItems value="#{clubController.itemsAvailableSelectOne}"
+                                           var="clubItem"
+                                           itemValue="#{clubItem}" itemLabel="#{clubItem.name}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sessionController.create}" value="#{bundle.Save}" update="display,:accordion:SessionListForm:datalist,:growl" oncomplete="handleSubmit(args,'SessionCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SessionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

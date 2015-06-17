@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SessionViewDlg" widgetVar="SessionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSessionTitle}">
+            <h:form id="SessionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sessionController.selected != null}">
+                        <h:outputText value="#{bundle.ViewSessionLabel_idsession}"/>
+                        <h:outputText value="#{sessionController.selected.idsession}" title="#{bundle.ViewSessionTitle_idsession}"/>
+                        <h:outputText value="#{bundle.ViewSessionLabel_plannedDate}"/>
+                        <h:outputText value="#{sessionController.selected.plannedDate}" title="#{bundle.ViewSessionTitle_plannedDate}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewSessionLabel_mailSent}"/>
+                        <h:outputText value="#{sessionController.selected.mailSent}" title="#{bundle.ViewSessionTitle_mailSent}"/>
+                        <h:outputText value="#{bundle.ViewSessionLabel_sessionType}"/>
+                        <h:outputText value="#{sessionController.selected.sessionType}" title="#{bundle.ViewSessionTitle_sessionType}"/>
+                        <h:outputText value="#{bundle.ViewSessionLabel_bookedBy}"/>
+                        <h:outputText value="#{sessionController.selected.bookedBy}" title="#{bundle.ViewSessionTitle_bookedBy}"/>
+                        <h:outputText value="#{bundle.ViewSessionLabel_club}"/>
+                        <h:outputText value="#{sessionController.selected.club}" title="#{bundle.ViewSessionTitle_club}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="SessionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

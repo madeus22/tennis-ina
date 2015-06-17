@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="StatusTypeCreateDlg" widgetVar="StatusTypeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateStatusTypeTitle}">
+            <h:form id="StatusTypeCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{statusTypeController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateStatusTypeLabel_idStatusType}" for="idStatusType" />
+                        <p:inputText id="idStatusType" value="#{statusTypeController.selected.idStatusType}" title="#{bundle.CreateStatusTypeTitle_idStatusType}" required="true" requiredMessage="#{bundle.CreateStatusTypeRequiredMessage_idStatusType}"/>
+                        <p:outputLabel value="#{bundle.CreateStatusTypeLabel_label}" for="label" />
+                        <p:inputText id="label" value="#{statusTypeController.selected.label}" title="#{bundle.CreateStatusTypeTitle_label}" />
+                        <p:outputLabel value="#{bundle.CreateStatusTypeLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{statusTypeController.selected.description}" title="#{bundle.CreateStatusTypeTitle_description}" />
+                        <p:outputLabel value="#{bundle.CreateStatusTypeLabel_color}" for="color" />
+                        <p:inputText id="color" value="#{statusTypeController.selected.color}" title="#{bundle.CreateStatusTypeTitle_color}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{statusTypeController.create}" value="#{bundle.Save}" update="display,:StatusTypeListForm:datalist,:growl" oncomplete="handleSubmit(args,'StatusTypeCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="StatusTypeCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SessionTypeCreateDlg" widgetVar="SessionTypeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSessionTypeTitle}">
+            <h:form id="SessionTypeCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sessionTypeController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSessionTypeLabel_idSessionType}" for="idSessionType" />
+                        <p:inputText id="idSessionType" value="#{sessionTypeController.selected.idSessionType}" title="#{bundle.CreateSessionTypeTitle_idSessionType}" required="true" requiredMessage="#{bundle.CreateSessionTypeRequiredMessage_idSessionType}"/>
+                        <p:outputLabel value="#{bundle.CreateSessionTypeLabel_label}" for="label" />
+                        <p:inputText id="label" value="#{sessionTypeController.selected.label}" title="#{bundle.CreateSessionTypeTitle_label}" required="true" requiredMessage="#{bundle.CreateSessionTypeRequiredMessage_label}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sessionTypeController.create}" value="#{bundle.Save}" update="display,:SessionTypeListForm:datalist,:growl" oncomplete="handleSubmit(args,'SessionTypeCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SessionTypeCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

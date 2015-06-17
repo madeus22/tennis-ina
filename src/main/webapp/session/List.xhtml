@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListSessionTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+                <h:form id="SessionListForm">
+                    <p:panel header="#{bundle.ListSessionTitle}">
+                        <p:dataTable id="datalist" value="#{sessionController.items}" var="item"
+                            selectionMode="single" selection="#{sessionController.selected}"
+                            paginator="true"
+                            rowKey="#{item.idsession}"
+                            rows="10"
+                            rowsPerPageTemplate="10,20,30,40,50"
+                            >
+
+                            <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                            <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListSessionTitle_idsession}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idsession}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListSessionTitle_plannedDate}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.plannedDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListSessionTitle_mailSent}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.mailSent}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListSessionTitle_sessionType}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.sessionType}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListSessionTitle_bookedBy}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.bookedBy}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListSessionTitle_club}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.club}"/>
+                            </p:column>
+                            
+
+                            
+                            <f:facet name="footer">
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{sessionController.prepareCreate}" update=":SessionCreateForm" oncomplete="PF('SessionCreateDialog').show()"/>
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":SessionViewForm" oncomplete="PF('SessionViewDialog').show()" disabled="#{empty sessionController.selected}"/>
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":SessionEditForm" oncomplete="PF('SessionEditDialog').show()" disabled="#{empty sessionController.selected}"/>
+                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{sessionController.destroy}" update=":growl,datalist" disabled="#{empty sessionController.selected}"/>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

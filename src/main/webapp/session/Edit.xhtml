@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SessionEditDlg" widgetVar="SessionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSessionTitle}">
+            <h:form id="SessionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sessionController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditSessionLabel_idsession}" for="idsession" />
+                        <p:outputLabel id="idsession" value="#{sessionController.selected.idsession}" />
+                        <p:outputLabel value="#{bundle.EditSessionLabel_plannedDate}" for="plannedDate" />
+                        <p:calendar id="plannedDate" pattern="dd/MM/yyyy HH:mm" locale="#{bundle.CalendarLocale}" value="#{sessionController.selected.plannedDate}" title="#{bundle.EditSessionTitle_plannedDate}" required="true" requiredMessage="#{bundle.EditSessionRequiredMessage_plannedDate}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditSessionLabel_mailSent}" for="mailSent" />
+                        <p:inputText id="mailSent" value="#{sessionController.selected.mailSent}" title="#{bundle.EditSessionTitle_mailSent}" required="true" requiredMessage="#{bundle.EditSessionRequiredMessage_mailSent}"/>
+                        <p:outputLabel value="#{bundle.EditSessionLabel_sessionType}" for="sessionType" />
+                        <p:selectOneMenu id="sessionType" value="#{sessionController.selected.sessionType}" required="true" requiredMessage="#{bundle.EditSessionRequiredMessage_sessionType}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{sessionTypeController.itemsAvailableSelectOne}"
+                                           var="sessionTypeItem"
+                                           itemValue="#{sessionTypeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditSessionLabel_bookedBy}" for="bookedBy" />
+                        <p:selectOneMenu id="bookedBy" value="#{sessionController.selected.bookedBy}" required="true" requiredMessage="#{bundle.EditSessionRequiredMessage_bookedBy}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="bookedByItem"
+                                           itemValue="#{bookedByItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditSessionLabel_club}" for="club" />
+                        <p:selectOneMenu id="club" value="#{sessionController.selected.club}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{clubController.itemsAvailableSelectOne}"
+                                           var="clubItem"
+                                           itemValue="#{clubItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sessionController.update}" value="#{bundle.Save}" update="display,:accordion:SessionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SessionEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SessionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

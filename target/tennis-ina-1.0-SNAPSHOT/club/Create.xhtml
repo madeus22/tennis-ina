@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClubCreateDlg" widgetVar="ClubCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateClubTitle}">
+            <h:form id="ClubCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{clubController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateClubLabel_idclub}" for="idclub" />
+                        <p:inputText id="idclub" value="#{clubController.selected.idclub}" title="#{bundle.CreateClubTitle_idclub}" required="true" requiredMessage="#{bundle.CreateClubRequiredMessage_idclub}"/>
+                        <p:outputLabel value="#{bundle.CreateClubLabel_address}" for="address" />
+                        <p:inputText id="address" value="#{clubController.selected.address}" title="#{bundle.CreateClubTitle_address}" />
+                        <p:outputLabel value="#{bundle.CreateClubLabel_phone}" for="phone" />
+                        <p:inputText id="phone" value="#{clubController.selected.phone}" title="#{bundle.CreateClubTitle_phone}" />
+                        <p:outputLabel value="#{bundle.CreateClubLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{clubController.selected.name}" title="#{bundle.CreateClubTitle_name}" required="true" requiredMessage="#{bundle.CreateClubRequiredMessage_name}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{clubController.create}" value="#{bundle.Save}" update="display,:ClubListForm:datalist,:growl" oncomplete="handleSubmit(args,'ClubCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ClubCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
